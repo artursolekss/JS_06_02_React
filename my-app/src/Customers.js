@@ -28,24 +28,35 @@ class Customers extends React.Component {
         customersLoad.map((obj) => {
             initCustomers.push(Object.assign({}, obj));
         })
-        this.state.customers = initCustomers;
+        this.setState({ customers: initCustomers });
     }
 
     render() {
         return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>E-Mail</th>
-                        <th>Phone</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>E-Mail</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            !(this.state.customers === undefined) && this.state.customers.map((customer) => {
+                                return (
+                                    <tr>
+                                        <td>{customer.firstname}</td>
+                                        <td>{customer.lastname}</td>
+                                        <td>{customer.email}</td>
+                                        <td>{customer.phone}</td>
+                                    </tr>
+                                );
+                            })
+                        }
+                    </tbody>
+                </table>
         );
     }
 
