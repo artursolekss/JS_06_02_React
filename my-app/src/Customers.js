@@ -7,6 +7,28 @@ class Customers extends React.Component {
         this.state = {
             customers: []
         }
+        this.customersInit();
+    }
+
+    customersInit = () => {
+        let self = this;
+        fetch("http://localhost:80/my-app-backend/customers.php", {
+            method: "GET"
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(customers => {
+                    self.setCustomerTable(customers);
+                });
+            }
+        })
+    }
+
+    setCustomerTable(customersLoad) {
+        const initCustomers = [];
+        customersLoad.map((obj) => {
+            initCustomers.push(Object.assign({}, obj));
+        })
+        this.state.customers = initCustomers;
     }
 
     render() {
