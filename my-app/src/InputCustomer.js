@@ -15,13 +15,13 @@ class InputCustomer extends React.Component {
     onSave = (event) => {
         let self = this;
         const headers = new Headers();
-        headers.append("Content-type","application/json");
+        headers.append("Content-type", "application/json");
         fetch("http://localhost:80/my-app-backend/createCustomer.php", {
             method: "POST",
-            headers:headers,
-            body:JSON.stringify(self.state)
+            headers: headers,
+            body: JSON.stringify(self.state)
         }).then(function (response) {
-          
+            console.log(response);
         })
         event.preventDefault();
     }
@@ -44,15 +44,27 @@ class InputCustomer extends React.Component {
     render() {
         return (
             <form onSubmit={this.onSave}>
-                <input fieldname="firstname" value={this.state.firstName}
-                    onChange={this.onNameChange}></input>
-                <input fieldname="lastname" value={this.state.lastName}
-                    onChange={this.onLastNamechange}></input>
-                <input fieldname="email" value={this.state.email}
-                    onChange={this.onEmailChange}></input>
-                <input fieldname="phone" value={this.state.phone}
-                    onChange={this.onPhoneChange}></input>
-                <button>Save</button>
+                <div className="form-group">
+                    <label htmlFor="firstname">First Name</label>
+                    <input id="firstname"
+                        fieldname="firstname" value={this.state.firstName}
+                        onChange={this.onNameChange}></input>
+                    <label htmlFor="lastname">Last Name</label>
+                    <input id="lastname"
+                        fieldname="lastname" value={this.state.lastName}
+                        onChange={this.onLastNamechange}></input>
+
+                    <label htmlFor="email">E-Mail</label>
+                    <input id="email"
+                        fieldname="email" value={this.state.email}
+                        onChange={this.onEmailChange}></input>
+
+                    <label htmlFor="phone">Phone</label>
+                    <input id="phone"
+                        fieldname="phone" value={this.state.phone}
+                        onChange={this.onPhoneChange}></input>
+                    <button className="btn btn-primary">Save</button>
+                </div>
             </form>
         );
     }

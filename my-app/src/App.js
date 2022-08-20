@@ -5,8 +5,8 @@ import InputCustomer from './InputCustomer';
 function App() {
   return (
     <div className="App">
-      <Customers></Customers>
       <InputCustomer></InputCustomer>
+      <Customers></Customers>
     </div>
   );
 }

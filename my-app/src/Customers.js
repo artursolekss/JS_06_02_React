@@ -46,7 +46,7 @@ class Customers extends React.Component {
                         {
                             !(this.state.customers === undefined) && this.state.customers.map((customer) => {
                                 return (
-                                    <tr>
+                                    <tr key={customer.id}>
                                         <td>{customer.firstname}</td>
                                         <td>{customer.lastname}</td>
                                         <td>{customer.email}</td>
