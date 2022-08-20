@@ -5,8 +5,8 @@ class InputCustomer extends React.Component {
     constructor() {
         super();
         this.state = {
-            firstName: "",
-            lastName: "",
+            firstname: "",
+            lastname: "",
             email: "",
             phone: ""
         }
@@ -16,22 +16,23 @@ class InputCustomer extends React.Component {
         let self = this;
         const headers = new Headers();
         headers.append("Content-type", "application/json");
-        fetch("http://localhost:80/my-app-backend/createCustomer.php", {
+        fetch("http://localhost/my-app-backend/createCustomer.php", {
             method: "POST",
             headers: headers,
             body: JSON.stringify(self.state)
         }).then(function (response) {
-            console.log(response);
+            response.json().then((body) => {
+                alert(body);
+            })
         })
-        event.preventDefault();
     }
 
     onNameChange = (event) => {
-        this.setState({ firstName: event.target.value });
+        this.setState({ firstname: event.target.value });
     }
 
     onLastNamechange = (event) => {
-        this.setState({ lastName: event.target.value });
+        this.setState({ lastname: event.target.value });
     }
 
     onEmailChange = (event) => {
@@ -47,11 +48,11 @@ class InputCustomer extends React.Component {
                 <div className="form-group">
                     <label htmlFor="firstname">First Name</label>
                     <input id="firstname"
-                        fieldname="firstname" value={this.state.firstName}
+                        fieldname="firstname" value={this.state.firstname}
                         onChange={this.onNameChange}></input>
                     <label htmlFor="lastname">Last Name</label>
                     <input id="lastname"
-                        fieldname="lastname" value={this.state.lastName}
+                        fieldname="lastname" value={this.state.lastname}
                         onChange={this.onLastNamechange}></input>
 
                     <label htmlFor="email">E-Mail</label>
