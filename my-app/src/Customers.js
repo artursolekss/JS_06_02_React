@@ -17,33 +17,39 @@ class Customers extends React.Component {
     }
 
     onChangeSave = () => {
-        const custListUpdate = [];
-        for (let i = 0; i < this.state.custToUpdate.length; i++) {
-            if (this.state.custToUpdate[i] !== true)
-                continue;
-            const customerId = i;
-            const customer = this.state.customers.find((customer) => {
-                return customer.id === customerId;
-            })
-            custListUpdate.push(customer);
+        let custListUpdate = [];
+        let link;
+        if (this.props.allNew) {
+            custListUpdate = this.state.customers;
+            link = "http://localhost/my-app-backend/createCustomers.php"
         }
-
+        else {
+            for (let i = 0; i < this.state.custToUpdate.length; i++) {
+                if (this.state.custToUpdate[i] !== true)
+                    continue;
+                const customerId = i;
+                const customer = this.state.customers.find((customer) => {
+                    return customer.id === customerId;
+                })
+                custListUpdate.push(customer);
+            }
+            link = "http://localhost/my-app-backend/updateCustomer.php";
+        }
         const headers = new Headers();
         headers.append("Content-type", "application/json");
         const self = this;
-        fetch("http://localhost/my-app-backend/updateCustomer.php", {
+        fetch(link, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(custListUpdate)
         }).then(function (response) {
             response.json().then((body) => {
                 alert(body);
-                const customersInit = this.state.customers;
+                const customersInit = self.state.customers;
                 self.setCustomerTable(customersInit);
                 self.setState({ custToUpdate: [] });
             })
         })
-
     }
 
     updateCustomer = (id, fieldname, value) => {
@@ -89,7 +95,7 @@ class Customers extends React.Component {
                 <button className='btn' type='button' onClick={this.setEditable}>
                     Edit
                 </button>
-                <button className='btn' onClick={this.onChangeSave} type="button">
+                <button className='btn' onClick={() => { this.onChangeSave() }} type="button">
                     Save
                 </button>
                 <button className='btn' onClick={this.onCancel} type="button">

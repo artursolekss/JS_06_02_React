@@ -3,9 +3,8 @@ import Customers from './Customers';
 
 class CustomersFile extends React.Component {
 
-    customersInit = (me) => {
+    customersInit = (sourceObj) => {
         const headers = new Headers();
-        const self = me;
         const filename = this.props.filename
         headers.append("Content-type", "application/json");
         fetch("http://localhost/my-app-backend/getFileContent.php", {
@@ -15,7 +14,7 @@ class CustomersFile extends React.Component {
         }).then(function (response) {
             if (response.ok) {
                 response.json().then(data => {
-                    self.setCustomerTable(data.customers);
+                    sourceObj.setCustomerTable(data.customers);
                 });
             }
         })
@@ -23,7 +22,7 @@ class CustomersFile extends React.Component {
 
     render() {
         return (
-            <Customers customersInit={this.customersInit}></Customers>
+            <Customers customersInit={this.customersInit} allNew={true}></Customers>
         )
     }
 
