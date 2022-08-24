@@ -1,7 +1,7 @@
 function NavBar({ openPage }) {
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand navbar-light bg-light">
             <div className="collapse navbar-collapse">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">

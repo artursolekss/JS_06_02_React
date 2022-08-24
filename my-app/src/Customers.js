@@ -8,8 +8,23 @@ class Customers extends React.Component {
             customers: [],
             customersInit: [],
             editable: false,
-            custToUpdate: []
+            custToUpdate: [],
+            numberOfPages: 0,
+            currentPage: 1,
+            customersShown: []
         }
+    }
+
+    setPageShown = (customers) => {
+        const startPos = (this.state.currentPage - 1) * 10;
+        let endPosit = startPos + 10;
+        if (endPosit + 1 > customers.length)
+            endPosit = customers.length;
+
+        const customersShown = [];
+        for (let i = startPos; i < endPosit; i++)
+            customersShown.push(customers[i]);
+        this.setState({ customersShown: customersShown });
     }
 
     componentDidMount() {
@@ -69,7 +84,12 @@ class Customers extends React.Component {
         customersLoad.map((obj) => {
             initCustomers.push(Object.assign({}, obj));
         })
-        this.setState({ customers: initCustomers, customersInit: customersLoad });
+        const pagesNo = Math.floor(customersLoad.length / 10);
+        this.setState({
+            customers: initCustomers,
+            customersInit: customersLoad, numberOfPages: pagesNo
+        });
+        this.setPageShown(customersLoad);
     }
 
     setEditable = () => {
@@ -89,9 +109,22 @@ class Customers extends React.Component {
         this.setEditable();
     }
 
+    generatePageItems = () => {
+        const pagesArr = [];
+        for (let i = 1; i <= this.state.numberOfPages; i++) {
+            pagesArr.push(<li className="page-item"><a className="page-link" key={i}>{i}</a></li>);
+        }
+        return pagesArr;
+    }
+
     render() {
         return (
             <form method='POST'>
+                <nav aria-label="Page navigation example">
+                    <ul className="pagination">
+                        {this.generatePageItems()}
+                    </ul>
+                </nav>
                 <button className='btn' type='button' onClick={this.setEditable}>
                     Edit
                 </button>
@@ -112,7 +145,7 @@ class Customers extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            !(this.state.customers === undefined) && this.state.customers.map((customer) => {
+                            !(this.state.customersShown === undefined) && this.state.customersShown.map((customer) => {
                                 return (
                                     <tr key={customer.id} onChange={
                                         (e) => this.onInputChange(e, customer.id)}>
