@@ -19,7 +19,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <NavBar openPage={this.openPage}></NavBar>
         {this.state.pageDisplayed === "HomePage" && <HomePage />}
         {this.state.pageDisplayed === "LoadPage" && <LoadPage />}

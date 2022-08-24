@@ -10,20 +10,10 @@ class Customers extends React.Component {
             editable: false,
             custToUpdate: []
         }
-        this.customersInit();
     }
 
-    customersInit = () => {
-        let self = this;
-        fetch("http://localhost/my-app-backend/customers.php", {
-            method: "GET"
-        }).then(function (response) {
-            if (response.ok) {
-                response.json().then(customers => {
-                    self.setCustomerTable(customers);
-                });
-            }
-        })
+    componentDidMount() {
+        this.props.customersInit(this);
     }
 
     onChangeSave = () => {
@@ -126,7 +116,7 @@ class Customers extends React.Component {
                                             </div>
                                             <input hidden={!this.state.editable}
                                                 fieldname="firstname"
-                                                value={customer.firstname}></input>
+                                                defaultValue={customer.firstname}></input>
                                         </td>
                                         <td>
                                             <div hidden={this.state.editable}>
@@ -134,7 +124,7 @@ class Customers extends React.Component {
                                             </div>
                                             <input hidden={!this.state.editable}
                                                 fieldname="lastname"
-                                                value={customer.lastname}></input>
+                                                defaultValue={customer.lastname}></input>
                                         </td>
                                         <td>
                                             <div hidden={this.state.editable}>
@@ -142,7 +132,7 @@ class Customers extends React.Component {
                                             </div>
                                             <input hidden={!this.state.editable}
                                                 fieldname="email"
-                                                value={customer.email}></input>
+                                                defaultValue={customer.email}></input>
                                         </td>
                                         <td>
                                             <div hidden={this.state.editable}>
@@ -150,7 +140,7 @@ class Customers extends React.Component {
                                             </div>
                                             <input hidden={!this.state.editable}
                                                 fieldname="phone"
-                                                value={customer.phone}></input>
+                                                defaultValue={customer.phone}></input>
                                         </td>
                                     </tr>
                                 );
