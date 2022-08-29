@@ -15,15 +15,15 @@ class Customers extends React.Component {
         }
     }
 
-    setPageShown = (customers) => {
+    setPageShown = () => {
         const startPos = (this.state.currentPage - 1) * 10;
         let endPosit = startPos + 10;
-        if (endPosit + 1 > customers.length)
-            endPosit = customers.length;
+        if (endPosit + 1 > this.state.customers.length)
+            endPosit = this.state.customers.length;
 
         const customersShown = [];
         for (let i = startPos; i < endPosit; i++)
-            customersShown.push(customers[i]);
+            customersShown.push(this.state.customers[i]);
         this.setState({ customersShown: customersShown });
     }
 
@@ -89,7 +89,7 @@ class Customers extends React.Component {
             customers: initCustomers,
             customersInit: customersLoad, numberOfPages: pagesNo
         });
-        this.setPageShown(customersLoad);
+        this.setPageShown();
     }
 
     setEditable = () => {
@@ -109,11 +109,42 @@ class Customers extends React.Component {
         this.setEditable();
     }
 
+    switchPageEvent = (event) => {
+        this.swtichPage(
+            Number(event.target.innerHTML));
+    }
+
+    swtichPage = (pageNo) => {
+        this.setState({ currentPage: pageNo });
+        this.setPageShown();
+    }
+
+    nextPage = () => {
+        this.swtichPage(++this.state.currentPage);
+    }
+
+    previousPage = () => {
+        this.swtichPage(--this.state.currentPage);
+    }
+
     generatePageItems = () => {
         const pagesArr = [];
+        if (this.state.currentPage > 1)
+            pagesArr.push(<li className="page-item" key={"prev"}>
+                <button type='button' className="btn btn-primary"
+                    onClick={this.previousPage}>Previous</button>
+            </li>)
         for (let i = 1; i <= this.state.numberOfPages; i++) {
-            pagesArr.push(<li className="page-item"><a className="page-link" key={i}>{i}</a></li>);
+            pagesArr.push(<li className="page-item" key={i}>
+                <button type='button' className="btn"
+                    onClick={this.switchPageEvent}>{i}</button>
+            </li>);
         }
+        if (this.state.currentPage < this.state.numberOfPages)
+            pagesArr.push(<li className="page-item" key={"next"}>
+                <button type='button' className="btn btn-primary"
+                    onClick={this.nextPage}>Next</button>
+            </li>)
         return pagesArr;
     }
 

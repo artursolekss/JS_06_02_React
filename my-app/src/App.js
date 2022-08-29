@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import HomePage from './pages/HomePage';
 import React from 'react';
 import LoadPage from './pages/LoadPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 class App extends React.Component {
 
@@ -20,9 +21,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="App container">
-        <NavBar openPage={this.openPage}></NavBar>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<NavBar></NavBar>}>
+              <Route index element={<HomePage></HomePage>}></Route>
+              <Route path='loadPage' element={<LoadPage></LoadPage>}></Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+
+        {/* <NavBar openPage={this.openPage}></NavBar>
         {this.state.pageDisplayed === "HomePage" && <HomePage />}
-        {this.state.pageDisplayed === "LoadPage" && <LoadPage />}
+        {this.state.pageDisplayed === "LoadPage" && <LoadPage />} */}
       </div>
     );
   }
