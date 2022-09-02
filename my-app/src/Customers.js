@@ -136,7 +136,8 @@ class Customers extends React.Component {
             </li>)
         for (let i = 1; i <= this.state.numberOfPages; i++) {
             pagesArr.push(<li className="page-item" key={i}>
-                <button type='button' className="btn"
+                <button type='button' className={this.state.currentPage
+                    === i ? "btn btn-primary" : "btn"}
                     onClick={this.switchPageEvent}>{i}</button>
             </li>);
         }
