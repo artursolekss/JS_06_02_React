@@ -6,10 +6,6 @@ function LoginPage() {
 
     const [register, setRegister] = useState(false);
 
-    const onRegister = () => {
-
-    }
-
     return (
         <div className="container">
             <nav className="navbar navbar-expand navbar-light bg-light">

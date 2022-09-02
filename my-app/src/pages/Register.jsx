@@ -2,7 +2,6 @@ import { useState } from "react";
 
 function Register() {
 
-    const [register, setRegister] = useState(false);
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRep, setPasswordRepeat] = useState("");
@@ -19,7 +18,8 @@ function Register() {
             })
         }).then((response) => {
             response.json().then((body) => {
-            
+                if (body.userCreated === true)
+                    alert("User is registered");
             })
         })
 
