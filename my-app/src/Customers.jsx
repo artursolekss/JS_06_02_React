@@ -11,7 +11,8 @@ class Customers extends React.Component {
             custToUpdate: [],
             numberOfPages: 0,
             currentPage: 1,
-            customersShown: []
+            customersShown: [],
+            user: JSON.parse(sessionStorage.getItem("user"))
         }
     }
 
@@ -157,15 +158,20 @@ class Customers extends React.Component {
                         {this.generatePageItems()}
                     </ul>
                 </nav>
-                <button className='btn' type='button' onClick={this.setEditable}>
-                    Edit
-                </button>
-                <button className='btn' onClick={() => { this.onChangeSave() }} type="button">
-                    Save
-                </button>
-                <button className='btn' onClick={this.onCancel} type="button">
-                    Cancel
-                </button>
+
+                {this.state.user.roleID === 1 &&
+                    <div>
+                        <button className='btn' type='button' onClick={this.setEditable}>
+                            Edit
+                        </button>
+                        <button className='btn' onClick={() => { this.onChangeSave() }} type="button">
+                            Save
+                        </button>
+                        <button className='btn' onClick={this.onCancel} type="button">
+                            Cancel
+                        </button>
+                    </div>
+                }
                 <table>
                     <thead>
                         <tr>

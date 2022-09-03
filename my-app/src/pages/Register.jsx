@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Register() {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRep, setPasswordRepeat] = useState("");
+    const [userGroup, setUserGroup] = useState("");
+    const [userGroups, setUsergroups] = useState([]);
+
+    useEffect(() => {
+
+        if (userGroups.length === 0) {
+            const headers = new Headers();
+            headers.append("Content-type", "application/json");
+            fetch("http://localhost/userManagement/GetUserGroups.php", {
+                method: "GET",
+                headers: headers
+            }).then((response) => {
+                response.json().then((body) => {
+                    setUsergroups(body.usergroups);
+                })
+            });
+        }
+    }, [])
 
     const onRegister = (event) => {
         event.preventDefault();
@@ -20,7 +38,8 @@ function Register() {
             headers: headers,
             body: JSON.stringify({
                 username: username,
-                password: password
+                password: password,
+                role: userGroup
             })
         }).then((response) => {
             response.json().then((body) => {
@@ -61,6 +80,18 @@ function Register() {
                         }}
                     />
                     <label className="form-label" htmlFor="passwordrep">Repeat Password</label>
+                </div>
+
+                <div className="form-outline mb-4">
+                    <select id="userGroup" onChange={(event) => {
+                        setUserGroup(event.target.value)
+                    }}>
+                        {userGroups.map((userGroup) => {
+                            return (
+                                <option key={userGroup.id} value={userGroup.id}>{userGroup.text}</option>)
+                        })}
+                    </select>
+                    <label className="form-label" htmlFor="userGroup">User role</label>
                 </div>
                 <button className="btn btn-primary">Register</button>
             </form>

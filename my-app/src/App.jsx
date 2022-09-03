@@ -12,7 +12,7 @@ class App extends React.Component {
     super();
     this.state = {
       // pageDisplayed: "HomePage"
-      user: sessionStorage.getItem("user")
+      user: JSON.parse(sessionStorage.getItem("user"))
     }
   }
 

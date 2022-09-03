@@ -41,4 +41,22 @@
     text-decoration: none;
     color: black;
     margin-right: 5px;
+    margin-left: 5px;
+}
+
+.nav-item a:hover {
+    cursor: pointer;
+}
+
+.username {
+    color: blue;
+}
+
+.nav-item-active {
+    background-color: #0d6efd;
+    border-radius: 0.25em;
+}
+
+.nav-item-active a {
+    color: white;
 }

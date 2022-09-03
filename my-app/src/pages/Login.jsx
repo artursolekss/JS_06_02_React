@@ -21,7 +21,8 @@ function Login() {
                     alert("Login failed (username or password not corred)");
                 }
                 else {
-                    sessionStorage.setItem("user", username);
+                    sessionStorage.setItem("user",
+                        JSON.stringify({ username: username, roleID: body.role }));
                     window.location.reload();
                 }
             })
