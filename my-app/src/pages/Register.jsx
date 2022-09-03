@@ -7,6 +7,12 @@ function Register() {
     const [passwordRep, setPasswordRepeat] = useState("");
 
     const onRegister = (event) => {
+        event.preventDefault();
+        if (password !== passwordRep) {
+            alert("Password don't match");
+            return;
+        }
+
         const headers = new Headers();
         headers.append("Content-type", "application/json");
         fetch("http://localhost/userManagement/RegisterUser.php", {
@@ -20,10 +26,11 @@ function Register() {
             response.json().then((body) => {
                 if (body.userCreated === true)
                     alert("User is registered");
+                else {
+                    alert(body.error);
+                }
             })
         })
-
-        event.preventDefault();
     }
 
     return (

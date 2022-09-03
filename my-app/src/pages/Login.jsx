@@ -17,7 +17,13 @@ function Login() {
             })
         }).then((response) => {
             response.json().then((body) => {
-                console.log(body);
+                if (body.userexist === false) {
+                    alert("Login failed (username or password not corred)");
+                }
+                else {
+                    sessionStorage.setItem("user", username);
+                    window.location.reload();
+                }
             })
         })
 
