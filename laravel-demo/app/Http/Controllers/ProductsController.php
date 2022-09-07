@@ -18,4 +18,12 @@ class ProductsController extends Controller
             "csrf_token" => csrf_token()
         ]);
     }
+
+    public function buy(Request $request)
+    {
+        $basket = $request->basket;
+        foreach ($basket as $product) :
+            Product::where("id", $product["id"])->update(["stockquantity" => $product["stockquantity"]]);
+        endforeach;
+    }
 }
