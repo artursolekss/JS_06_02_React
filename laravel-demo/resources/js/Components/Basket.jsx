@@ -30,10 +30,7 @@ export default function Basket(props) {
             headers: headers,
             body: JSON.stringify({ "basket": products })
         }).then((response) => {
-            response.json().then((body) => {
-                alert(body);
-                clearBasket();
-            })
+            clearBasket();
         })
     }
 
@@ -41,7 +38,7 @@ export default function Basket(props) {
         <div className="container">
             {products.map((product) => {
                 return (
-                    <div className="row">
+                    <div className="row" key={product.id}>
                         <div className="col">
                             {product.name}
                         </div>
