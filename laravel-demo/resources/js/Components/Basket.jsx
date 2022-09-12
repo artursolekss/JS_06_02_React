@@ -17,6 +17,8 @@ export default function Basket(props) {
     const clearBasket = () => {
         sessionStorage.setItem("basket", JSON.stringify([]));
         changeProducts([]);
+        sessionStorage.removeItem("products");
+        window.location.reload();
     }
 
     const onBuy = () => {
@@ -49,9 +51,13 @@ export default function Basket(props) {
                     </div>)
             })}
             <button
-                className="btn btn-primary"
+                className="btn btn-success"
                 onClick={onBuy}
             >Buy</button>
+            <button
+                className="btn btn-danger"
+                onClick={clearBasket}
+            >Clear</button>
         </div>
     )
 

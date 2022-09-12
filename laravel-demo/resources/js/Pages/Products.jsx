@@ -1,3 +1,4 @@
+import ProductButton from "@/Components/ProductButton";
 import Authenticated from "@/Layouts/Authenticated";
 import { useEffect, useState } from "react";
 
@@ -18,9 +19,7 @@ export default function Products(props) {
 
     }, [])
 
-    const addProduct = (event) => {
-        const id =
-            Number(event.target.getAttribute("productid"));
+    const addProduct = (id) => {
 
         let basket = JSON.parse(sessionStorage.getItem("basket"));
         if (basket === null) {
@@ -60,17 +59,16 @@ export default function Products(props) {
                 header={""}
                 csrf_token={props.csrf_token}
             >
-                <div class="products row">
+                <div className="products row">
                     {(products !== null) && products.map((product) => {
-                        return (<div className="col">
+                        return (<div className="col" key={product.id}>
                             <div className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{product.name}</h5>
                                     <p className="card-text">
                                         Product descrition</p>
-                                    <button productId={product.id}
-                                        onClick={(event) => { addProduct(event) }}
-                                        class="btn btn-primary">Add</button>
+                                    <ProductButton productId={product.id}
+                                        addProduct={addProduct} />
                                     <h6>Quantity : {product.stockquantity}</h6>
                                 </div>
                             </div>
