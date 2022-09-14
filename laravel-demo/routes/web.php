@@ -3,7 +3,9 @@
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
+use App\Mail\OrderMail;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,6 +43,10 @@ Route::get('/dashboard', function () {
 
 Route::post('/buy', [ProductsController::class, "buy"]);
 
-Route::get("/order",[OrderController::class,"showOrder"]);
+Route::get("/order", [OrderController::class, "showOrder"]);
+
+// Route::get('/sendOrderEMail/{id}', function ($id) {
+//     Mail::to("arturs.olekss@gmail.com")->send(new OrderMail($id));
+// });
 
 require __DIR__ . '/auth.php';
