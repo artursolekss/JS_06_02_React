@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +46,14 @@ Route::post('/buy', [ProductsController::class, "buy"]);
 
 Route::get("/order", [OrderController::class, "showOrder"]);
 
-// Route::get('/sendOrderEMail/{id}', function ($id) {
-//     Mail::to("arturs.olekss@gmail.com")->send(new OrderMail($id));
-// });
+Route::get('/sendOrderEMail/{id}', function ($id) {
+    try {
+        // $a = 1 / 0;
+        throw new DivisionByZeroError("Manually triggered error");
+        Mail::to("arturs.olekss@gmail.com")->send(new OrderMail($id));
+    } catch (TransportException | DivisionByZeroError $e) {
+        return view("error", ["error_text" => $e->getMessage()]);
+    }
+});
 
 require __DIR__ . '/auth.php';

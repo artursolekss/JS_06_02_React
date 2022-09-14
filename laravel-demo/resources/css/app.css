@@ -76,3 +76,11 @@
 .inline {
     display: -webkit-inline-box;
 }
+
+.click {
+    cursor: pointer;
+}
+
+.plusminus {
+    margin: 0.3px;
+}
